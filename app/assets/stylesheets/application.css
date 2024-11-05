@@ -1,0 +1,61 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ #roomContainer {
+   width: 100vw;
+   height: calc(100vh - 130px);
+   position: relative;
+ }
+ #roomContainer > .OT_publisher {
+   top: 25px;
+   right: 25px;
+   position: absolute;
+   border-radius: 10px;
+ }
+ #roomContainer > .OT_screenshare {
+   top: 25px;
+   left: 25px;
+   position: absolute;
+   border-radius: 10px;
+ }
+
+menu {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  width: 650px;
+  background-color: var(--vvd-color-primary);
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.white-border {
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.select-max-width {
+  max-width: 130px;
+}
+/* 
+vwc-tooltip {
+  --tooltip-inline-size: 100px;
+  text-align: center;
+} */

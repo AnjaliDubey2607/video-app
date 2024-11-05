@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@vonage/video-express": "^1.4.2",
+    "@vonage/vivid": "^3.2.0",
+    "@vonage/vwc-button": "^2.37.0",
+    "@vonage/vwc-card": "^2.37.0",
+    "@vonage/vwc-switch": "^2.37.0",
+    "@vonage/vwc-text": "^2.37.0",
+    "@vonage/vwc-top-app-bar-fixed": "^2.37.0"
+  }
+}

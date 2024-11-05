@@ -1,0 +1,75 @@
+<!-- Mute all / Unmute all -->
+<button class="btn btn-success p-3 rounded-circle d-none m-3" id="call-mute-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-mic-fill" viewBox="0 0 16 16" id="mute-all">
+        <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z"/>
+        <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
+      </svg>
+    </button>
+    <button class="btn btn-danger p-3 rounded-circle d-none m-3" id="call-unmute-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-mic-mute-fill" viewBox="0 0 16 16" id="unmute-all">
+        <path d="M13 8c0 .564-.094 1.107-.266 1.613l-.814-.814A4.02 4.02 0 0 0 12 8V7a.5.5 0 0 1 1 0v1zm-5 4c.818 0 1.578-.245 2.212-.667l.718.719a4.973 4.973 0 0 1-2.43.923V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 1 0v1a4 4 0 0 0 4 4zm3-9v4.879L5.158 2.037A3.001 3.001 0 0 1 11 3z"/>
+        <path d="M9.486 10.607 5 6.12V8a3 3 0 0 0 4.486 2.607zm-7.84-9.253 12 12 .708-.708-12-12-.708.708z"/>
+      </svg>
+    </button>
+<%# 
+<vwc-icon-button icon="audio-max-solid" shape="circled" layout="filled" id="mute-all" class="white-border"></vwc-icon-button>
+<vwc-icon-button icon="audio-off-solid" shape="circled" layout="filled" id="unmute-all" class="hidden white-border"></vwc-icon-button> %>
+<%# <vwc-tooltip anchor="mute-all" text="Mute All" corner="top" id="mute-all-tooltip"></vwc-tooltip>
+<vwc-tooltip anchor="unmute-all" text="Un-Mute All" corner="top" id="unmute-all-tooltip"></vwc-tooltip> %>
+
+
+
+
+
+
+<!-- Mute Self / Unmute Self -->
+<!-- Select Mic Input -->
+<vwc-action-group layout="outlined" shape="pill" class="vvd-scheme-alternate">
+  <vwc-icon-button icon="mic-mute-solid" shape="circled" layout="ghost" id="mute-self" class="vvd-scheme-alternate" ></vwc-icon-button>
+  <vwc-icon-button icon="microphone-2-solid" shape="circled" layout="ghost" id="unmute-self" class="hidden vvd-scheme-alternate"></vwc-icon-button>
+  <vwc-tooltip anchor="mute-self" text="Disable Mic" corner="top" id="mute-self-tooltip"></vwc-tooltip>
+  <vwc-tooltip anchor="unmute-self" text="Enable Mic" corner="top" id="unmute-self-tooltip"></vwc-tooltip>
+  <span role="separator"></span>
+  <vwc-select appearance="ghost" id="audio-input" class="select-max-width">
+    <vwc-list-item
+      disabled
+      selected
+    >
+    <button class="OT_edge-bar-item OT_mute OT_mode-off OT_active" type="button">Mic</button>
+    </vwc-list-item>
+  </vwc-select>
+</vwc-action-group>
+
+
+<!-- Disable Camera / Enable Camera -->
+<!-- Select Camera Input -->
+<vwc-action-group layout="outlined" shape="pill" class="vvd-scheme-alternate">
+  <vwc-icon-button icon="video-off-solid" shape="circled" layout="ghost" id="hide-self" class="vvd-scheme-alternate" ></vwc-icon-button>
+  <vwc-icon-button icon="video-solid" shape="circled" layout="ghost" id="unhide-self" class="hidden vvd-scheme-alternate"></vwc-icon-button>
+  <vwc-tooltip anchor="hide-self" text="Disable Camera" corner="top" id="hide-self-tooltip"></vwc-tooltip>
+  <vwc-tooltip anchor="unhide-self" text="Enable Camera" corner="top" id="unhide-self-tooltip"></vwc-tooltip>
+  <span role="separator"></span>
+  <vwc-select appearance="ghost" class="select-max-width" id="video-input">
+    <vwc-list-item
+      disabled
+      selected
+    >
+    Camera
+    </vwc-list-item>
+  </vwc-select>
+</vwc-action-group>
+
+<!-- Select Audio Output -->
+<vwc-action-group layout="outlined" shape="pill" class="vvd-scheme-alternate" id="audio-output-target">
+  <vwc-tooltip anchor="audio-output-target" text="Select Audio Output" corner="top" id="audio-output-tooltip"></vwc-tooltip>
+  <vwc-icon-button icon="headset-solid" shape="circled" layout="ghost" class="vvd-scheme-alternate"></vwc-icon-button>
+  <span role="separator"></span>
+  <vwc-select appearance="ghost" id="audio-output" class="select-max-width">
+    <vwc-list-item
+      disabled
+      selected
+    >
+    Audio
+    </vwc-list-item>
+  </vwc-select>
+</vwc-action-group>

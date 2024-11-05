@@ -1,0 +1,185 @@
+<%# <script src="https://static.opentok.com/v1/js/video-express.js"></script> %>
+<script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
+<header>
+  <!-- Header Will Go Here -->
+  <%= render partial: 'components/header' %>
+ <div id="screen" class="screen"></div>
+
+  <!-- These are both new too -->
+
+
+</header>
+<main>
+  <!-- This element is new -->
+
+
+<main class="app">
+  <div id="roomContainer"></div>
+  <menu>
+    <!-- Toolbar Will Go Here -->
+     <%= render partial: 'components/toolbox' %>
+     <%= link_to "Leave Meeting", leave_call_path %>
+     <% if @name == @moderator_name %>
+      <%= button_to "End Call", end_call_path, method: :delete, onclick: "location.reload() " %>
+     <% end %>
+     <%#debugger%>
+     <%#session = OpenTok.initSession(@apiKey, session_id)%>
+     <button onclick=session.forceMuteAll();>Mute all </button>
+  </menu>
+
+    <div id="screen" class="screen"></div>
+
+  <!-- These two elements already exist from the first tutorial -->
+  <div id="subscriber" class="subscriber"></div>
+  <div id="publisher" class="publisher"></div>
+
+  <!-- These are both new too -->
+  <button id="startScreenShare" class="screen-share">Share Screen</button>
+  <button id="stopScreenShare" class="screen-share hidden">Stop Sharing Screen</button>
+
+</main>
+</main>
+
+
+
+
+<script>
+  const room = new VideoExpress.Room({
+   apiKey: '<%= @api_key %>', // add your OpenTok API key
+   sessionId: '<%= @session_id %>', // add your OpenTok Session ID
+   token: '<%= @token %>', // add your OpenTok token
+   roomContainer: 'roomContainer',
+   participantName: '<%= @name %>'
+ 
+ });
+ room.join();
+
+
+
+ window.onMuteAudioButton = function(room){
+  room.localParticipant.audioTracks.forEach(function(audioTrack) {
+     audioTrack.track.disable();
+  });
+   $("#call-mute-btn").addClass("d-none");
+   $("#call-unmute-btn").removeClass("d-none");
+};
+
+window.onUnMuteAudioButton = function(room){
+     room.localParticipant.audioTracks.forEach(function(audioTrack) {
+     audioTrack.track.enable();
+   });
+  $("#call-mute-btn").removeClass("d-none");
+  $("#call-unmute-btn").addClass("d-none");
+};
+
+
+</script>
+
+  <script>
+    let session;
+    fetch(location.pathname, { method: "get" })
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        const apiKey = res.apiKey;
+        const sessionId = res.sessionId;
+        const token = res.token;
+        initializeSession(apiKey, sessionId, token);
+      })
+      .catch(handleCallback);
+    function initializeSession(apiKey, sessionId, token) {
+      // Create a session object with the sessionId
+      session = OT.initSession(apiKey, sessionId);
+      // Create a publisher
+      const publisher = OT.initPublisher(
+        "publisher",
+        {
+          insertMode: "append",
+          width: "300px",
+          height: "300px"
+        },
+        handleCallback
+      );
+      // Connect to the session
+      session.connect(token, error => {
+        // If the connection is successful, initialize the publisher and publish to the session
+        if (error) {
+          handleCallback(error);
+        } else {
+          session.publish(publisher, handleCallback);
+        }
+      });
+      // Subscribe to a newly created stream
+      session.on("streamCreated", event => {
+        const streamContainer =
+          event.stream.videoType === "screen" ? "screen" : "subscriber";
+        session.subscribe(
+          event.stream,
+          streamContainer,
+          {
+            insertMode: "append",
+            width: "300px",
+            height: "300px"
+          },
+          handleScreenShare(event.stream.videoType)
+        );
+      });
+      session.on("streamDestroyed", event => {
+        document.getElementById("screen").classList.remove("sub-active");
+      });
+    }
+    // Function to handle screenshare layout
+    function handleScreenShare(streamType, error) {
+      if (error) {
+        console.log("error: " + error.message);
+      } else {
+        if (streamType === "screen") {
+          document.getElementById("screen").classList.add("sub-active");
+        }
+      }
+    }
+    // Callback handler
+    function handleCallback(error) {
+      if (error) {
+        console.log("error: " + error.message);
+      } else {
+        console.log("callback success");
+      }
+    }
+    let screenSharePublisher;
+    const startShareBtn = document.getElementById("startScreenShare");
+    startShareBtn.addEventListener("click", event => {
+      OT.checkScreenSharingCapability(response => {
+        if (!response.supported || response.extensionRegistered === false) {
+          alert("Screen sharing not supported");
+        } else if (response.extensionInstalled === false) {
+          alert("Browser requires extension");
+        } else {
+          screenSharePublisher = OT.initPublisher(
+            "screen",
+            {
+              insertMode: "append",
+              width: "300px",
+              height: "300px",
+              videoSource: "screen",
+              publishAudio: true
+            },
+            handleCallback
+          );
+          session.publish(screenSharePublisher, handleCallback);
+          startShareBtn.classList.toggle("hidden");
+          stopShareBtn.classList.toggle("hidden");
+          document.getElementById("screen").classList.add("pub-active");
+        }
+      });
+    });
+    const stopShareBtn = document.getElementById("stopScreenShare");
+    stopShareBtn.addEventListener("click", event => {
+      screenSharePublisher.destroy();
+      startShareBtn.classList.toggle("hidden");
+      stopShareBtn.classList.toggle("hidden");
+      document.getElementById("screen").classList.remove("pub-active");
+    });
+
+  </script>

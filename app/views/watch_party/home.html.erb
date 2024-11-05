@@ -1,0 +1,28 @@
+<div class="card-wrapper">
+  <vwc-card>
+    <div slot="main" id="box">
+      <vwc-text font-face="subtitle-1" >Big Game Watch Party
+        <br>
+        <span><vwc-text font-face="body-1-code">Built With Vonage Video Express on Rails</vwc-text></span></vwc-text>
+        <main>
+        <div class="landing">
+            <h1><%= @welcome_message %></h1>
+            <p><%= @name_form_text %></p>
+            <%= form_with(url: "/login", method: "post") do %>
+            <%= text_field_tag 'name', nil, :placeholder => @name_placeholder_text %>
+            <%= password_field_tag 'password', nil, :placeholder => @password_placeholder_text %>
+            <%= submit_tag @name_form_submit_button_text %>
+            <% flash.each do |type, msg| %>
+                <p class="error"><%= msg %></p>
+            <% end %>
+            <% end %>
+        </div>
+        </main>
+    </div>
+  </vwc-card>
+</div>
+
+
+
+
+

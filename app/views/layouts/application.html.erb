@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VideoExpress</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= javascript_importmap_tags%>
+    <script src="https://static.opentok.com/v1/js/video-express.js"></script>
+    <%# <link rel="stylesheet" href="/video-express-styles.css" media="screen" charset="utf-8"> %>
+
+
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
